@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { CardContainer } from './Components/card-container/card-container.component';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      pokemons: [
+        {
+          name: 'bulbasaur',
+        },
+      ],
+    };
+  }
+
+  componentDidMount() {
+    fetch('https://pokeapi.co/api/v2/pokemon/bulbasaur')
+      .then((response) => response.json())
+      .then((users) => this.setState({ pokemons: users }));
+  }
+
+  render() {
+    const { pokemons } = this.state;
+
+    return (
+      <div className="App">
+        <h1>React Pokedex</h1>
+        <CardContainer pokemons={pokemons} />
+      </div>
+    );
+  }
 }
 
 export default App;
